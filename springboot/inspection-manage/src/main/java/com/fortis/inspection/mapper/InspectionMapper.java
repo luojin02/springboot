@@ -1,11 +1,11 @@
-package com.fortis.inspection.dao;
+package com.fortis.inspection.mapper;
 
 import com.fortis.inspection.entity.SysChannelEntity;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
-public interface InspectionDao {
+@Repository
+public interface InspectionMapper {
 
     SysChannelEntity getChannel(@Param("sysId")Integer sysId);
 

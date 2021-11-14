@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan("com.fortis.inspection.dao")
+@MapperScan("com.fortis.inspection.mapper")
 public class InspectionApplication {
 
 	public static void main(String[] args) {

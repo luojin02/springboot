@@ -1,134 +1,63 @@
 package com.fortis.inspection.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+@ApiModel(value = "系统渠道")
 public class SysChannelEntity {
-
-    private Integer channelId;      //渠道ID
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "渠道ID",dataType = "int",required = true)
+    private Integer channelId;
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "渠道名称",dataType = "string",required = true)
     private String channelName;     //渠道名称
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "电子邮箱",dataType = "string",required = true)
     private String email;       //电子邮箱
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "手机号码",dataType = "bigint",required = true)
     private Long phone;      //手机号码
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "企业名称",dataType = "string",required = true)
     private String enterprise;  //企业名称
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "统一社会信用代码",dataType = "string",required = true)
     private String creditCode;  //统一社会信用代码
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "系统分配的 AccessKeyID",dataType = "string",required = true)
     private String accessKeyId; //系统分配的 AccessKeyID
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "系统分配的 AccessKeySecret",dataType = "string",required = true)
     private String accessKeySecret;     //系统分配的 AccessKeySecret
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "请求访问状态（0-禁用，1-启用）",dataType = "tinyint",required = true)
     private Byte accessStatus;        //请求访问状态（0-禁用，1-启用）
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "创建者（超级管理员帐号）",dataType = "string",required = true)
     private String creator;     //创建者（超级管理员帐号）
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "创建时间",dataType = "string",required = true)
     private String createTime;  //创建时间
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "修改者（超级管理员帐号）",dataType = "string")
     private String modifier;    //修改者（超级管理员帐号）
-
+    @Getter
+    @Setter
+    @ApiModelProperty(value = "修改时间",dataType = "string")
     private String modifyTime;      //修改时间
 
-    public Integer getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(Integer channelId) {
-        this.channelId = channelId;
-    }
-
-    public String getChannelName() {
-        return channelName;
-    }
-
-    public void setChannelName(String channelName) {
-        this.channelName = channelName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Long phone) {
-        this.phone = phone;
-    }
-
-    public String getEnterprise() {
-        return enterprise;
-    }
-
-    public void setEnterprise(String enterprise) {
-        this.enterprise = enterprise;
-    }
-
-    public String getCreditCode() {
-        return creditCode;
-    }
-
-    public void setCreditCode(String creditCode) {
-        this.creditCode = creditCode;
-    }
-
-    public String getAccessKeyId() {
-        return accessKeyId;
-    }
-
-    public void setAccessKeyId(String accessKeyId) {
-        this.accessKeyId = accessKeyId;
-    }
-
-    public String getAccessKeySecret() {
-        return accessKeySecret;
-    }
-
-    public void setAccessKeySecret(String accessKeySecret) {
-        this.accessKeySecret = accessKeySecret;
-    }
-
-    public Byte getAccessStatus() {
-        return accessStatus;
-    }
-
-    public void setAccessStatus(Byte accessStatus) {
-        this.accessStatus = accessStatus;
-    }
-
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getModifier() {
-        return modifier;
-    }
-
-    public void setModifier(String modifier) {
-        this.modifier = modifier;
-    }
-
-    public String getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(String modifyTime) {
-        this.modifyTime = modifyTime;
-    }
 }
