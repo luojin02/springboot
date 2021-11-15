@@ -1,6 +1,7 @@
 package com.fortis.inspection.controller;
 
 import com.fortis.inspection.annotation.SercurValidate;
+import com.fortis.inspection.component.RedisUtil;
 import com.fortis.inspection.entity.SysChannelEntity;
 import com.fortis.inspection.service.InspectionService;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +24,9 @@ public class TestController {
     @Autowired
     private InspectionService inspectionService;
 
+    @Autowired
+    private RedisUtil redisUtil;
+
     @GetMapping("hello")
     public String getHello(){
         return "hello";
@@ -44,4 +48,12 @@ public class TestController {
         return "用户名："+name+";密码："+password;
     }
 
+
+    @GetMapping("redis")
+    public String redis() {
+        String key = "1111";
+        String value = "aaaa";
+        redisUtil.setTokenCache(key,value);
+        return "cg";
+    }
 }
