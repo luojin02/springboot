@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.fortis</groupId>
 	<artifactId>inspectionManage</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-20211125</version>
 	<name>inspectionManage</name>
 	<description>risk inspection manage System</description>
 	<properties>
@@ -110,6 +110,40 @@
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix></classpathPrefix>
+							<mainClass>com.fortis.inspection.InspectionApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<!-- The configuration of the plugin -->
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/config/package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
