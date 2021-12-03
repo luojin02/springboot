@@ -1,6 +1,5 @@
 package com.fortis.inspection;
 
-import com.fortis.inspection.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -22,9 +21,9 @@ public class RedisTest {
 
     @Test
     public void test() {
-        String key = "user:1";
+        /*String key = "user:1";
         redisTemplate.opsForValue().set(key, new User(1,"pjmike",20));
         User user = (User) redisTemplate.opsForValue().get(key);
-        logger.info("uesr: "+user.toString());
+        logger.info("uesr: "+user.toString());*/
     }
 }

@@ -1,51 +1,39 @@
 package com.fortis.inspection.component;
 
-import com.fortis.inspection.annotation.SercurValidate;
-import org.aspectj.lang.JoinPoint;
+import com.fortis.inspection.model.UserVo;
+import com.fortis.inspection.result.ResultData;
+import com.fortis.inspection.result.ResultTypeEnum;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Component
 @Aspect
 public class SercurAspect {
 
-    @Pointcut("execution(public * com.fortis.inspection.controller..*(..))")
-    public void login() {
+    @Pointcut("@annotation(com.fortis.inspection.annotation.SercurValidate)")
+    public void pointcut() {}
+
+    @Around("pointcut()")
+    public Object invoke(ProceedingJoinPoint point) throws Throwable {
+        //获取目标方法的参数信息
+        Object[] args = point.getArgs();
+        //获取RequestAttributes
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        //从获取RequestAttributes中获取HttpServletRequest的信息
+        HttpServletRequest request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
+        HttpSession session = request.getSession();
+        UserVo user =(UserVo) session.getAttribute("userSession");
+        /*if(ObjectUtils.isEmpty(user)){
+            return ResultData.fail(ResultTypeEnum.NOT_LOGIN_OR_SESSION_TIMEOUT.getCode(),ResultTypeEnum.NOT_LOGIN_OR_SESSION_TIMEOUT.getMsg(),null);
+        }*/
+        return point.proceed();       //执行目标方法
     }
-
-    @Before("login() && @annotation(sv)")
-    public void demoBefore(JoinPoint joinPoint, SercurValidate sv) {
-        System.out.println("@before 开始");
-    }
-
-    @After("login() && @annotation(sv)")
-    public void demoAfter(JoinPoint joinPoint, SercurValidate sv) {
-        //....
-    }
-
-    @AfterThrowing("login() && @annotation(sv)")
-    public void demoAfterThrowing(JoinPoint joinPoint, SercurValidate sv) {
-        //....
-    }
-
-    @Around("login() && @annotation(sv)")
-    public Object demoAround(ProceedingJoinPoint pjp, SercurValidate sv) throws Throwable {
-
-        System.out.println("@Around 开始校验。。。");
-        Object[] args = pjp.getArgs();
-        String username = (String) args[0];
-        //其他校验太复杂了，就做点长度校验
-        if (username != null && username.length() > 4 && username.length() < 20) {
-            System.out.println("校验成功");
-            return pjp.proceed();       //执行目标方法
-        }
-        /*System.out.println("校验失败,以访客登录");
-        args[0] = sv.name();
-        args[1] = sv.pwd();
-        return pjp.proceed(args);*/
-        return "校验失败,以访客登录";
-    }
-
 
 }

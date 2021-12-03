@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DrugBaseMsgMapper">
+
+    <select id="queryLabelClassList" parameterType="LabelClassParam" resultType="LabelClassVo" >
+        SELECT
+            m.labelclass_id as lableclassId,
+            m.sup_labelclass_id as supLabelclassId,
+            m.labelclass_name as labelclassName,
+            m.labelclass_level as labelclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_labelclass m
+        where  1=1
+        <if test="labelclassName != null and labelclassName != ''">
+            and m.labelclass_name like concat('%', #{labelclassName}, '%')
+        </if>
+        <if test="labelclassLevel != null">
+            and m.labelclass_level = #{lableclassLevel}
+        </if>
+        order by m.labelclass_id desc
+    </select>
+
+    <select id="getLabelClassById" parameterType="int" resultType="LabelClassVo" >
+        SELECT
+            labelclass_id as lableclassId,
+            sup_labelclass_id as supLabelclassId,
+            labelclass_name as labelclassName,
+            labelclass_level as labelclassLevel,
+            notes as notes,
+            creator as creator,
+            create_time as createTime
+        FROM
+            t_labelclass
+        where
+            labelclass_id = #{labelclassId}
+    </select>
+
+    <insert id="addLabelClass" parameterType="labelClass">
+        insert into t_labelclass
+        (
+            <if test="supLabelclassId != null">
+                sup_labelclass_id,
+            </if>
+            labelclass_name,
+            labelclass_level,
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supLabelclassId != null">
+                #{supLabelclassId},
+            </if>
+            #{labelclassName},
+            #{labelclassLevel},
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteLabelClass" parameterType="int">
+        DELETE FROM t_labelclass where labelclass_id = #{labelclassId}
+    </delete>
+
+    <update id="updateLabelClass" parameterType="LabelClassUd">
+        UPDATE
+            t_labelclass
+        SET
+            <if test="supLabelclassId != null">
+                sup_labelclass_id = #{supLabelclassId},
+            </if>
+            labelclass_name = #{labelclassName},
+            labelclass_level = #{labelclassLevel},
+            <if test="notes != null">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            labelclass_id = #{labelclassId}
+    </update>
+
+    <select id="queryLabelList" parameterType="LabelParam" resultType="LabelVo" >
+        SELECT
+            m.label_id as labelId,
+            m.labelclass_id as labelclassId,
+            m.label_name as labelName,
+            m.label_desc as labelDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.labelclass_name as labelclassName
+        FROM
+            t_label m left join t_labelclass n on m.labelclass_id = n.labelclass_id
+        where  1=1
+        <if test="labelName != null and labelName != ''">
+            and m.label_name like concat('%', #{labelName}, '%')
+        </if>
+        order by m.label_id desc
+    </select>
+
+    <select id="getLabelById" parameterType="int" resultType="LabelVo" >
+        SELECT
+            t1.label_id as lableId,
+            t1.labelclass_id as labelclassId,
+            t2.labelclass_name as labelclassName,
+            t1.label_name as labelName,
+            t1.label_desc as labelDesc,
+            t1.creator as creator,
+            t1.create_time as createTime
+        FROM
+            t_label t1 left join t_labelclass t2 on t1.labelclass_id = t2.labelclass_id
+        where
+            t1.label_id = #{labelId}
+    </select>
+
+    <insert id="addLabel" parameterType="Label">
+        insert into t_label
+        (
+            labelclass_id,
+            label_name,
+            <if test="labelDesc != null and labelDesc != ''">
+                label_desc,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{labelclassId},
+            #{labelName},
+            <if test="labelDesc != null and labelDesc != ''">
+                #{labelDesc},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteLabel" parameterType="int">
+        DELETE FROM t_label where label_id = #{labelId}
+    </delete>
+
+    <update id="updateLabel" parameterType="LabelUd">
+        UPDATE
+            t_label
+        SET
+            labelclass_id = #{labelclassId},
+            label_name = #{labelName},
+            <if test="labelDesc != null">
+                label_desc = #{labelDesc},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            label_id = #{labelId}
+    </update>
+
+    <select id="queryFormList" parameterType="FormParam" resultType="FormVo" >
+        SELECT
+            m.form_id as formId,
+            m.sup_form_id as supFormId,
+            m.form as form,
+            m.form_level as formLevel,
+            m.form_type as formType,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_form m
+        where  1=1
+        <if test="form != null and form != ''">
+            and m.form like concat('%', #{form}, '%')
+        </if>
+        <if test="formLevel != null">
+            and m.form_level = #{formLevel}
+        </if>
+        <if test="formType != null">
+            and m.form_type = #{formType}
+        </if>
+        order by m.form_id desc
+    </select>
+</mapper>

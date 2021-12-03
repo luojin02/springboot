@@ -6,6 +6,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface SercurValidate {
-    String name() default  "visitor";
-    String pwd() default "123456";
+    String value() default "";
+    SercurValidateEnum type() default SercurValidateEnum.SELECT;
 }

@@ -28,7 +28,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("风险监测后台管理系统")
-                .description("沈阳市基层诊所智慧防疫")
+                .description("风险监测后台管理系统")
                 .version("1.0")
                 .build();
     }
