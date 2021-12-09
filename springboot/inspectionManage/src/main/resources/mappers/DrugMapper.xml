@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DrugMapper">
+
+    <select id="queryDrugList" parameterType="DrugParam" resultType="DrugVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.common_name as commonName,
+            m.side_effect as sideEffect,
+            m.taboo as taboo,
+            m.otc_type as otcType,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_drug m
+        where  1=1
+            <if test="commonName != null and commonName != ''">
+                and m.common_name like concat('%', #{commonName}, '%')
+            </if>
+            <if test="otcType != null">
+                and m.otc_type = #{otcType}
+            </if>
+            order by m.drug_id desc
+    </select>
+
+    <select id="getDrugById" parameterType="int" resultType="DrugVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.common_name as commonName,
+            m.side_effect as sideEffect,
+            m.taboo as taboo,
+            m.otc_type as otcType,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_drug m
+        where
+            m.drug_id = #{drugId}
+    </select>
+
+    <insert id="addDrug" parameterType="Drug">
+        insert into t_drug
+        (
+            common_name,
+            <if test="sideEffect != null and sideEffect != ''">
+                side_effect,
+            </if>
+            <if test="taboo != null and taboo != ''">
+                taboo,
+            </if>
+            otc_type,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{commonName},
+            <if test="sideEffect != null and sideEffect != ''">
+                #{sideEffect},
+            </if>
+            <if test="taboo != null and taboo != ''">
+                #{taboo},
+            </if>
+            #{otcType},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteDrug" parameterType="int">
+        DELETE FROM t_drug where drug_id = #{drugId}
+    </delete>
+
+    <update id="updateDrug" parameterType="DrugUd">
+        UPDATE
+            t_drug
+        SET
+            common_name = #{commonName},
+            <if test="sideEffect != null and sideEffect != ''">
+                side_effect = #{sideEffect},
+            </if>
+            <if test="taboo != null and taboo != ''">
+                taboo = #{taboo},
+            </if>
+            otc_type = #{otcType},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_id = #{drugId}
+    </update>
+
+    <select id="queryDrugclassList" parameterType="DrugclassParam" resultType="DrugclassVo" >
+        SELECT
+            m.drugclass_id as drugclassId,
+            m.sup_drugclass_id as supDrugclassId,
+            m.drugclass_name as drugclassName,
+            m.drugclass_level as drugclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_drugclass m
+        where  1=1
+            <if test="drugclassName != null and drugclassName != ''">
+                and m.drugclass_name like concat('%', #{drugclassName}, '%')
+            </if>
+            <if test="drugclassLevel != null">
+                and m.drugclass_level = #{drugclassLevel}
+            </if>
+            order by m.drugclass_id desc
+    </select>
+
+    <select id="getDrugclassById" parameterType="int" resultType="DrugclassVo" >
+        SELECT
+            m.drugclass_id as drugclassId,
+            m.sup_drugclass_id as supDrugclassId,
+            m.drugclass_name as drugclassName,
+            m.drugclass_level as drugclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_drugclass m
+        where
+            m.drugclass_id = #{drugclassId}
+    </select>
+
+    <insert id="addDrugclass" parameterType="Drugclass">
+        insert into t_drugclass
+        (
+            <if test="supDrugclassId != null">
+                sup_drugclass_id,
+            </if>
+            drugclass_name,
+            drugclass_level,
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supDrugclassId != null">
+                #{supDrugclassId},
+            </if>
+            #{drugclassName},
+            #{drugclassLevel},
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDrugclass" parameterType="DrugclassUd">
+        UPDATE
+            t_drugclass
+        SET
+            <if test="supDrugclassId != null">
+                sup_drugclass_id = #{supDrugclassId},
+            </if>
+            drugclass_name = #{drugclassName},
+            drugclass_level = #{drugclassLevel},
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time = now()
+        WHERE
+            drugclass_id = #{drugclassId}
+    </update>
+
+    <select id="selectHaveDrug" parameterType="int" resultType="int">
+        select
+            count(*)
+        from t_drugclass_drug
+        where
+            drugclass_id = #{drugclassId}
+    </select>
+
+    <delete id="deleteDrugclass" parameterType="int">
+        DELETE FROM t_drugclass where drugclass_id = #{drugclassId}
+    </delete>
+
+    <select id="queryIngredientList" parameterType="IngredientParam" resultType="IngredientVo" >
+        SELECT
+            m.ingredient_id as ingredientId,
+            m.ingredient as ingredient,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_ingredient m
+        where  1=1
+            <if test="ingredient != null and ingredient != ''">
+                and m.ingredient like concat('%', #{ingredient}, '%')
+            </if>
+            order by m.ingredient_id desc
+    </select>
+
+    <select id="getIngredientById" parameterType="int" resultType="IngredientVo" >
+        SELECT
+            m.ingredient_id as ingredientId,
+            m.ingredient as ingredient,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_ingredient m
+        where
+            m.ingredient_id = #{ingredientId}
+    </select>
+
+    <insert id="addIngredient" parameterType="Ingredient">
+        insert into t_ingredient
+        (
+            ingredient,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{ingredient},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateIngredient" parameterType="IngredientUd">
+        UPDATE
+            t_ingredient
+        SET
+            ingredient = #{ingredient},
+            modifier = #{modifier},
+            modify_time = now()
+        WHERE
+            ingredient_id = #{ingredientId}
+    </update>
+
+    <delete id="deleteIngredient" parameterType="int">
+        DELETE FROM t_ingredient where ingredient_id = #{ingredientId}
+    </delete>
+
+    <select id="queryDrugIngrdtList" parameterType="DrugIngrdtParam" resultType="DrugIngrdtVo" >
+        SELECT
+            m.drug_ingrdt_id as drugIngrdtId,
+            m.drug_id as drugId,
+            m.ingredient_id as ingredientId,
+            m.num as num,
+            m.unit as unit,
+            m.creator as creator,
+            m.create_time as createTime,
+            t2.common_name as commonName,
+            t3.ingredient as ingredient
+        FROM
+            t_drug_ingredient m left join t_drug t2 on m.drug_id = t2.drug_id
+            left join t_ingredient t3 on m.ingredient_id = t3.ingredient_id
+        where  1=1
+        <if test="commonName != null and commonName != ''">
+            and t2.common_name like concat('%', #{commonName}, '%')
+        </if>
+        <if test="ingredient != null and ingredient != ''">
+            and t3.ingredient like concat('%', #{ingredient}, '%')
+        </if>
+        order by m.drug_ingrdt_id desc
+    </select>
+
+    <select id="getDrugIngrdtById" parameterType="int" resultType="DrugIngrdtVo" >
+        SELECT
+            m.drug_ingrdt_id as drugIngrdtId,
+            m.drug_id as drugId,
+            m.ingredient_id as ingredientId,
+            m.num as num,
+            m.unit as unit,
+            m.creator as creator,
+            m.create_time as createTime,
+            t2.common_name as commonName,
+            t3.ingredient as ingredient
+        FROM
+            t_drug_ingredient m left join t_drug t2 on m.drug_id = t2.drug_id
+            left join t_ingredient t3 on m.ingredient_id = t3.ingredient_id
+        where
+            m.drug_ingrdt_id = #{drugIngrdtId}
+    </select>
+
+    <insert id="addDrugIngrdt" parameterType="DrugIngrdt">
+        insert into t_drug_ingredient
+        (
+            drug_id,
+            ingredient_id,
+            <if test="num != null and num != ''">
+                num,
+            </if>
+            <if test="unit != null and unit != ''">
+                unit,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{ingredientId},
+            <if test="num != null and num != ''">
+                #{num},
+            </if>
+            <if test="unit != null and unit != ''">
+                #{unit},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+
+</mapper>

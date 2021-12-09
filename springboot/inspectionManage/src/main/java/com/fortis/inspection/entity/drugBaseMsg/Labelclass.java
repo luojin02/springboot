@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @ApiModel("新增标签分类实体")
-public class LabelClass implements Serializable {
+public class Labelclass implements Serializable {
     private static final long serialVersionUID = -5229214591832170150L;
 
     @ApiModelProperty(value = "标签父分类编号",dataType = "int")

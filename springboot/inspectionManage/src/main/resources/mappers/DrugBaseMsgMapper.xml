@@ -38,7 +38,7 @@
             labelclass_id = #{labelclassId}
     </select>
 
-    <insert id="addLabelClass" parameterType="labelClass">
+    <insert id="addLabelClass" parameterType="LabelClass">
         insert into t_labelclass
         (
             <if test="supLabelclassId != null">
@@ -187,4 +187,477 @@
         </if>
         order by m.form_id desc
     </select>
+
+    <select id="getFormById" parameterType="int" resultType="FormVo" >
+        SELECT
+            form_id as formId,
+            sup_form_id as supFormId,
+            form as form,
+            form_level as formLevel,
+            form_type as formType,
+            creator as creator,
+            create_time as createTime
+        FROM
+            t_form
+        where
+            form_id = #{formId}
+    </select>
+
+    <insert id="addForm" parameterType="Form">
+        insert into t_form
+        (
+            <if test="supFormId != null">
+                sup_form_id,
+            </if>
+            form,
+            form_level,
+            form_type,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supFormId != null">
+                #{supFormId},
+            </if>
+            #{form},
+            #{formLevel},
+            #{formType},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteForm" parameterType="int">
+        DELETE FROM t_form where form_id = #{formId}
+    </delete>
+
+    <update id="updateForm" parameterType="FormUd">
+        UPDATE
+            t_form
+        SET
+            <if test="supFormId != null">
+                sup_form_id = #{supFormId},
+            </if>
+            form = #{form},
+            form_level = #{formLevel},
+            form_type = #{formType},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            form_id = #{formId}
+    </update>
+
+    <select id="queryDrugApprList" parameterType="DrugApprParam" resultType="DrugApprVo" >
+        SELECT
+            m.appr_id as apprId,
+            m.appr_no as apprNo,
+            m.drug_id as drugId,
+            m.appr_date as apprDate,
+            m.trade_name as tradeName,
+            m.manufacturer as manufacturer,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName
+        FROM
+            t_drug_appr m left join t_drug n on m.drug_id = n.drug_id
+        where  1=1
+            <if test="apprNo != null and apprNo != ''">
+                and m.appr_no like concat('%', #{apprNo}, '%')
+            </if>
+            <if test="commonName != null and commonName != ''">
+                and n.common_name like concat('%', #{commonName}, '%')
+            </if>
+            order by m.appr_id desc
+    </select>
+
+    <select id="getDrugApprById" parameterType="int" resultType="DrugApprVo" >
+        SELECT
+            t1.appr_id as apprId,
+            t1.appr_no as apprNo,
+            t1.drug_id as drugId,
+            t2.common_name as commonName,
+            t1.appr_date as apprDate,
+            t1.trade_name as tradeName,
+            t1.manufacturer as manufacturer,
+            t1.notes as notes,
+            t1.creator as creator,
+            t1.create_time as createTime
+        FROM
+            t_drug_appr t1 left join t_drug t2 on t1.drug_id = t2.drug_id
+        where
+            appr_id = #{apprId}
+    </select>
+
+    <insert id="addDrugAppr" parameterType="DrugAppr">
+        insert into t_drug_appr
+        (
+            drug_id,
+            appr_no,
+            <if test="apprDate != null and apprDate != ''">
+                appr_date,
+            </if>
+            <if test="tradeName != null and tradeName != ''">
+                trade_name,
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                manufacturer,
+            </if>
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{apprNo},
+            <if test="apprDate != null and apprDate != ''">
+                #{apprDate},
+            </if>
+            <if test="tradeName != null and tradeName != ''">
+                #{tradeName},
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                #{manufacturer},
+            </if>
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteDrugAppr" parameterType="int">
+        DELETE FROM t_drug_appr where appr_id = #{apprId}
+    </delete>
+
+    <update id="updateDrugAppr" parameterType="DrugApprUd">
+        UPDATE
+            t_drug_appr
+        SET
+            drug_id = #{drugId},
+            appr_no = #{apprNo},
+            <if test="apprDate != null and apprDate != ''">
+                appr_date = #{apprDate},
+            </if>
+            <if test="tradeName != null and apprDate != ''">
+                trade_name = #{tradeName},
+            </if>
+            <if test="manufacturer != null and manufacturer != ''">
+                manufacturer = #{manufacturer},
+            </if>
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            appr_id = #{apprId}
+    </update>
+
+    <select id="queryUsageList" parameterType="UsageParam" resultType="UsageVo" >
+        SELECT
+            m.usage_id as usageId,
+            m.usage,
+            m.usage_level as usageLevel,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_usage m
+        where  1=1
+            <if test="usage != null and usage != ''">
+                and m.usage like concat('%', #{usage}, '%')
+            </if>
+            <if test="usageLevel != null">
+                and m.usage_level = #{usageLevel}
+            </if>
+            order by m.usage_id desc
+    </select>
+
+    <select id="getUsageById" parameterType="int" resultType="UsageVo" >
+        SELECT
+            t1.usage_id as usageId,
+            t1.sup_usage_id as supUsageId,
+            t1.usage,
+            t1.usage_level as usageLevel,
+            t1.creator as creator,
+            t1.create_time as createTime
+        FROM
+            t_usage t1
+        where
+            usage_id = #{usageId}
+    </select>
+
+    <insert id="addUsage" parameterType="Usage">
+        insert into t_usage
+        (
+            <if test="supUsageId != null">
+                sup_usage_id,
+            </if>
+            `usage`,
+            usage_level,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supUsageId != null">
+                #{supUsageId},
+            </if>
+            #{usage},
+            #{usageLevel},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteUsage" parameterType="int">
+        DELETE FROM t_usage where usage_id = #{usageId}
+    </delete>
+
+    <update id="updateUsage" parameterType="UsageUd">
+        UPDATE
+            t_usage
+        SET
+            <if test="supUsageId != null">
+                sup_usage_id = #{supUsageId},
+            </if>
+            `usage` = #{usage},
+            usage_level = #{usageLevel},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            usage_id = #{usageId}
+    </update>
+
+    <select id="queryApprSpecList" parameterType="ApprSpecParam" resultType="ApprSpecVo" >
+        SELECT
+            t1.spec_id as specId,
+            t1.appr_id as apprId,
+            t1.spec as spec,
+            t1.spec_unit as specUnit,
+            t1.form_id as formId,
+            t1.usage_id as usageId,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.appr_no as apprNo,
+            t3.form as form,
+            t4.usage as `usage`
+        FROM
+            t_appr_spec t1 left join t_drug_appr t2 on t1.appr_id = t2.appr_id
+            left join t_form t3 on t1.form_id = t3.form_id
+            left join t_usage t4 on t1.usage_id = t4.usage_id
+        where  1=1
+            <if test="spec != null">
+                and t1.spec = #{spec}
+            </if>
+            <if test="apprNo != null and apprNo != ''">
+                and t2.appr_no like concat('%', #{apprNo}, '%')
+            </if>
+            <if test="form != null and form != ''">
+                and t3.form like concat('%', #{form}, '%')
+            </if>
+            <if test="usage != null and usage != ''">
+                and m.usage like concat('%', #{usage}, '%')
+            </if>
+            order by t1.spec_id desc
+    </select>
+
+    <select id="getApprSpecById" parameterType="int" resultType="ApprSpecVo" >
+        SELECT
+            t1.spec_id as specId,
+            t1.appr_id as apprId,
+            t1.spec as spec,
+            t1.spec_unit as specUnit,
+            t1.form_id as formId,
+            t1.usage_id as usageId,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.appr_no as apprNo,
+            t3.form as form,
+            t4.usage as `usage`
+        FROM
+            t_appr_spec t1 left join t_drug_appr t2 on t1.appr_id = t2.appr_id
+            left join t_form t3 on t1.form_id = t3.form_id
+            left join t_usage t4 on t1.usage_id = t4.usage_id
+        where
+            spec_id = #{specId}
+    </select>
+
+    <insert id="addApprSpec" parameterType="ApprSpec">
+        insert into t_appr_spec
+        (
+            appr_id,
+            spec,
+            spec_unit,
+            form_id,
+            usage_id,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{apprId},
+            #{spec},
+            #{specUnit},
+            #{formId},
+            #{usageId},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteApprSpec" parameterType="int">
+        DELETE FROM t_appr_spec where spec_id = #{specId}
+    </delete>
+
+    <update id="updateApprSpec" parameterType="ApprSpecUd">
+        UPDATE
+            t_appr_spec
+        SET
+            appr_id = #{apprId},
+            spec = #{spec},
+            spec_unit = #{specUnit},
+            form_id = #{formId},
+            usage_id = #{usageId},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            spec_id = #{specId}
+    </update>
+
+    <select id="querySpecPackList" parameterType="SpecPackParam" resultType="SpecPackVo" >
+        SELECT
+            t1.pack_id as packId,
+            t1.spec_id as specId,
+            t1.min_pack_num as minPackNum,
+            t1.min_pack_unit as minPackUnit,
+            t1.max_pack_num as maxPackNum,
+            t1.max_pack_unit as maxPackUnit,
+            t1.total_spec as totalSpec,
+            t1.mfg_date as mfgDate,
+            t1.validity_days as validityDays,
+            t1.batch_no as batchNo,
+            t1.barcode as barcode,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.spec
+        FROM
+            t_spec_pack t1 left join t_appr_spec t2 on
+                t1.spec_id = t2.spec_id
+        where  1=1
+            <if test="spec != null">
+                and t1.spec = #{spec}
+            </if>
+        order by t1.pack_id desc
+    </select>
+
+    <select id="getSpecPackById" parameterType="int" resultType="SpecPackVo" >
+        SELECT
+            t1.pack_id as packId,
+            t1.spec_id as specId,
+            t1.min_pack_num as minPackNum,
+            t1.min_pack_unit as minPackUnit,
+            t1.max_pack_num as maxPackNum,
+            t1.max_pack_unit as maxPackUnit,
+            t1.total_spec as totalSpec,
+            t1.mfg_date as mfgDate,
+            t1.validity_days as validityDays,
+            t1.batch_no as batchNo,
+            t1.barcode as barcode,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.spec
+        FROM
+            t_spec_pack t1 left join t_appr_spec t2 on t1.spec_id = t2.spec_id
+        where
+            pack_id = #{packId}
+    </select>
+
+    <insert id="addSpecPack" parameterType="SpecPack">
+        insert into t_spec_pack
+        (
+            spec_id,
+            min_pack_num,
+            min_pack_unit,
+            max_pack_num,
+            max_pack_unit,
+            total_spec,
+            <if test="mfgDate != null and mfgDate != ''">
+                mfg_date,
+            </if>
+            <if test="validityDays != null">
+                validity_days,
+            </if>
+            <if test="batchNo != null and mfgDate != ''">
+                batch_no,
+            </if>
+            <if test="barcode != null and barcode != ''">
+                barcode,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{specId},
+            #{minPackNum},
+            #{minPackUnit},
+            #{maxPackNum},
+            #{maxPackUnit},
+            #{totalSpec},
+            <if test="mfgDate != null and mfgDate != ''">
+                #{mfgDate},
+            </if>
+            <if test="validityDays != null">
+                #{validityDays},
+            </if>
+            <if test="batchNo != null and mfgDate != ''">
+                #{batchNo},
+            </if>
+            <if test="barcode != null and barcode != ''">
+                #{barcode},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteSpecPack" parameterType="int">
+        DELETE FROM t_spec_pack where pack_id = #{packId}
+    </delete>
+
+    <update id="updateSpecPack" parameterType="SpecPackUd">
+        UPDATE
+            t_spec_pack
+        SET
+            spec_id = #{specId},
+            min_pack_num = #{minPackNum},
+            min_pack_unit = #{minPackUnit},
+            max_pack_num = #{maxPackNum},
+            max_pack_unit = #{maxPackUnit},
+            total_spec = #{totalSpec},
+            <if test="mfgDate != null and mfgDate != ''">
+                mfg_date = #{mfgDate},
+            </if>
+            <if test="validityDays != null">
+                validity_days = #{validityDays},
+            </if>
+            <if test="batchNo != null and mfgDate != ''">
+                batch_no = #{batchNo},
+            </if>
+            <if test="barcode != null and barcode != ''">
+                barcode = #{barcode},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            pack_id = #{packId}
+    </update>
+
+
 </mapper>

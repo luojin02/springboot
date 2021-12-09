@@ -1,5 +1,4 @@
-package com.fortis.inspection.model.drugBaseMsg;
-
+package com.fortis.inspection.model.drug;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,29 +7,29 @@ import lombok.Setter;
 
 import java.io.Serializable;
 
-@ApiModel("标签分类返回")
-public class LabelClassVo implements Serializable {
-    private static final long serialVersionUID = -5229214591832170150L;
+@ApiModel("药品分类返回")
+public class DrugclassVo implements Serializable {
+    private static final long serialVersionUID = 337372817464066870L;
 
-    @ApiModelProperty("标签分类编号")
+    @ApiModelProperty("药品分类编号")
     @Getter
     @Setter
-    private Integer labelclassId;
+    private Integer drugclassId;
 
-    @ApiModelProperty("标签父分类编号")
+    @ApiModelProperty("药品父分类编号")
     @Getter
     @Setter
-    private Integer supLabelclassId;
+    private Integer supDrugclassId;
 
-    @ApiModelProperty("标签分类名称")
+    @ApiModelProperty("药品分类名称")
     @Getter
     @Setter
-    private String labelclassName;
+    private String drugclassName;
 
-    @ApiModelProperty("标签分类级别")
+    @ApiModelProperty("药品分类级别")
     @Getter
     @Setter
-    private Integer labelclassLevel;
+    private Integer drugclassLevel;
 
     @ApiModelProperty("备注")
     @Getter
@@ -46,6 +45,5 @@ public class LabelClassVo implements Serializable {
     @Getter
     @Setter
     private String createTime;
-
 
 }
