@@ -4,7 +4,7 @@
 
     <select id="queryLabelClassList" parameterType="LabelClassParam" resultType="LabelClassVo" >
         SELECT
-            m.labelclass_id as lableclassId,
+            m.labelclass_id as labelclassId,
             m.sup_labelclass_id as supLabelclassId,
             m.labelclass_name as labelclassName,
             m.labelclass_level as labelclassLevel,
@@ -18,7 +18,7 @@
             and m.labelclass_name like concat('%', #{labelclassName}, '%')
         </if>
         <if test="labelclassLevel != null">
-            and m.labelclass_level = #{lableclassLevel}
+            and m.labelclass_level = #{labelclassLevel}
         </if>
         order by m.labelclass_id desc
     </select>
@@ -88,6 +88,13 @@
         WHERE
             labelclass_id = #{labelclassId}
     </update>
+
+    <select id="getLabelClassLevelList" resultType="java.lang.Integer">
+        SELECT
+            labelclass_level
+        FROM t_labelclass
+        GROUP BY labelclass_level;
+    </select>
 
     <select id="queryLabelList" parameterType="LabelParam" resultType="LabelVo" >
         SELECT
@@ -583,7 +590,7 @@
         (
             spec_id,
             min_pack_num,
-            min_pack_unit,
+            min_pack_unit,queryLabelClassList
             max_pack_num,
             max_pack_unit,
             total_spec,

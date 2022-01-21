@@ -47,4 +47,8 @@ public interface DrugMapper {
     DrugIngrdtVo getDrugIngrdtById(Integer drugIngrdtId);
 
     void addDrugIngrdt(DrugIngrdt drugIngrdt);
+
+    void updateDrugIngrdt(DrugIngrdtUd drugIngrdt);
+
+    void deleteDrugIngrdt(Integer drugIngrdtId);
 }

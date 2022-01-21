@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("drugMsg")
 @Api(description = "药品包装规格信息管理")
@@ -47,25 +49,33 @@ public class DrugBaseMsgController {
     @PostMapping("addLabelClass")
     @ApiOperation(value = "新增标签分类")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addLableClass(@Validated @RequestBody Labelclass labelClass){
+    public ResultData<Object> addLableClass(@Validated @RequestBody Labelclass labelClass){
         drugBaseMsgService.addLabelClass(labelClass);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteLabelClass")
     @ApiOperation(value = "删除某个标签分类")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteLabelClass(@ApiParam(name = "labelclassId", value = "标签分类ID", required = true) @RequestParam Integer labelclassId){
+    public ResultData<Object> deleteLabelClass(@ApiParam(name = "labelclassId", value = "标签分类ID", required = true) @RequestParam Integer labelclassId){
         drugBaseMsgService.deleteLabelClass(labelclassId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateLabelClass")
     @ApiOperation(value = "更新某个标签分类")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateLabelClass(@Validated @RequestBody LabelclassUd labelClass){
+    public ResultData<Object> updateLabelClass(@Validated @RequestBody LabelclassUd labelClass){
         drugBaseMsgService.updateLabelClass(labelClass);
-        return Result.success();
+        return ResultData.success();
+    }
+
+    @PostMapping("getLabelClassLevelList")
+    @ApiOperation(value = "获取标签分类级别")
+    @SercurValidate(type = SercurValidateEnum.UPDATE)
+    public ResultData<Object> getLabelClassLevelList(){
+        List<Integer> list = drugBaseMsgService.getLabelClassLevelList();
+        return ResultData.success(list);
     }
 
     /** 标签 **/
@@ -88,25 +98,25 @@ public class DrugBaseMsgController {
     @PostMapping("addLabel")
     @ApiOperation(value = "新增标签")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addLable(@Validated @RequestBody Label label){
+    public ResultData<Object> addLable(@Validated @RequestBody Label label){
         drugBaseMsgService.addLabel(label);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteLabel")
     @ApiOperation(value = "删除某个标签")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteLabel(@ApiParam(name = "labelId", value = "标签ID", required = true) @RequestParam Integer labelId){
+    public ResultData<Object> deleteLabel(@ApiParam(name = "labelId", value = "标签ID", required = true) @RequestParam Integer labelId){
         drugBaseMsgService.deleteLabel(labelId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateLabel")
     @ApiOperation(value = "更新某个标签")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateLabel(@Validated @RequestBody LabelUd label){
+    public ResultData<Object> updateLabel(@Validated @RequestBody LabelUd label){
         drugBaseMsgService.updateLabe(label);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 剂型 **/
@@ -129,25 +139,25 @@ public class DrugBaseMsgController {
     @PostMapping("addForm")
     @ApiOperation(value = "新增剂型")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addForm(@Validated @RequestBody Form form){
+    public ResultData<Object> addForm(@Validated @RequestBody Form form){
         drugBaseMsgService.addForm(form);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteForm")
     @ApiOperation(value = "删除某个剂型")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteForm(@ApiParam(name = "formId", value = "剂型ID", required = true) @RequestParam Integer formId){
+    public ResultData<Object> deleteForm(@ApiParam(name = "formId", value = "剂型ID", required = true) @RequestParam Integer formId){
         drugBaseMsgService.deleteForm(formId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateForm")
     @ApiOperation(value = "更新某个剂型")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateForm(@Validated @RequestBody FormUd form){
+    public ResultData<Object> updateForm(@Validated @RequestBody FormUd form){
         drugBaseMsgService.updateForm(form);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 批准文号 **/
@@ -170,25 +180,25 @@ public class DrugBaseMsgController {
     @PostMapping("addDrugAppr")
     @ApiOperation(value = "新增批准文号")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addDrugAppr(@Validated @RequestBody DrugAppr appr){
+    public ResultData<Object> addDrugAppr(@Validated @RequestBody DrugAppr appr){
         drugBaseMsgService.addDrugAppr(appr);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteDrugAppr")
     @ApiOperation(value = "删除某个批准文号")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteDrugAppr(@ApiParam(name = "apprId", value = "批准文号ID", required = true) @RequestParam Integer apprId){
+    public ResultData<Object> deleteDrugAppr(@ApiParam(name = "apprId", value = "批准文号ID", required = true) @RequestParam Integer apprId){
         drugBaseMsgService.deleteDrugAppr(apprId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateDrugAppr")
     @ApiOperation(value = "更新某个批准文号")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateDrugAppr(@Validated @RequestBody DrugApprUd appr){
+    public ResultData<Object> updateDrugAppr(@Validated @RequestBody DrugApprUd appr){
         drugBaseMsgService.updateDrugAppr(appr);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 用法 **/
@@ -211,25 +221,25 @@ public class DrugBaseMsgController {
     @PostMapping("addUsage")
     @ApiOperation(value = "新增用法")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addUsage(@Validated @RequestBody Usage usage){
+    public ResultData<Object> addUsage(@Validated @RequestBody Usage usage){
         drugBaseMsgService.addUsage(usage);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteUsage")
     @ApiOperation(value = "删除用法")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteUsage(@ApiParam(name = "usageId", value = "用法ID", required = true) @RequestParam Integer usageId){
+    public ResultData<Object> deleteUsage(@ApiParam(name = "usageId", value = "用法ID", required = true) @RequestParam Integer usageId){
         drugBaseMsgService.deleteUsage(usageId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateUsage")
     @ApiOperation(value = "更新某个用法")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateUsage(@Validated @RequestBody UsageUd usage){
+    public ResultData<Object> updateUsage(@Validated @RequestBody UsageUd usage){
         drugBaseMsgService.updateUsage(usage);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 批准文号规格 **/
@@ -252,25 +262,25 @@ public class DrugBaseMsgController {
     @PostMapping("addApprSpec")
     @ApiOperation(value = "新增规格")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addApprSpec(@Validated @RequestBody ApprSpec apprSpec){
+    public ResultData<Object> addApprSpec(@Validated @RequestBody ApprSpec apprSpec){
         drugBaseMsgService.addApprSpec(apprSpec);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteApprSpec")
     @ApiOperation(value = "删除规格")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteApprSpec(@ApiParam(name = "specId", value = "规格ID", required = true) @RequestParam Integer specId){
+    public ResultData<Object> deleteApprSpec(@ApiParam(name = "specId", value = "规格ID", required = true) @RequestParam Integer specId){
         drugBaseMsgService.deleteApprSpec(specId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateApprSpec")
     @ApiOperation(value = "更新某个规格")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateApprSpec(@Validated @RequestBody ApprSpecUd apprSpec){
+    public ResultData<Object> updateApprSpec(@Validated @RequestBody ApprSpecUd apprSpec){
         drugBaseMsgService.updateApprSpec(apprSpec);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 包装 **/
@@ -293,25 +303,25 @@ public class DrugBaseMsgController {
     @PostMapping("addSpecPack")
     @ApiOperation(value = "新增包装")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addSpecPack(@Validated @RequestBody SpecPack pack){
+    public ResultData<Object> addSpecPack(@Validated @RequestBody SpecPack pack){
         drugBaseMsgService.addSpecPack(pack);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteSpecPack")
     @ApiOperation(value = "删除包装")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteSpecPack(@ApiParam(name = "packId", value = "包装ID", required = true) @RequestParam Integer packId){
+    public ResultData<Object> deleteSpecPack(@ApiParam(name = "packId", value = "包装ID", required = true) @RequestParam Integer packId){
         drugBaseMsgService.deleteSpecPack(packId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateSpecPack")
     @ApiOperation(value = "更新某个包装")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateSpecPack(@Validated @RequestBody SpecPackUd pack){
+    public ResultData<Object> updateSpecPack(@Validated @RequestBody SpecPackUd pack){
         drugBaseMsgService.updateSpecPack(pack);
-        return Result.success();
+        return ResultData.success();
     }
 
 

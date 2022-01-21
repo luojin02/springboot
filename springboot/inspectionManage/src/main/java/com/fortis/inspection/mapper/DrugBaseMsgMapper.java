@@ -20,6 +20,8 @@ public interface DrugBaseMsgMapper {
 
     void updateLabelClass(LabelclassUd param);
 
+    List<Integer> getLabelClassLevelList();
+
     List<LabelVo> queryLabelList(LabelParam param);
 
     LabelVo getLabelById(@Param("labelId")Integer labelId);

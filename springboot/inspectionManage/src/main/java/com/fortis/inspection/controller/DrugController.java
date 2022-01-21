@@ -47,25 +47,25 @@ public class DrugController {
     @PostMapping("addDrug")
     @ApiOperation(value = "新增药品")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addDrug(@Validated @RequestBody Drug drug){
+    public ResultData<Object> addDrug(@Validated @RequestBody Drug drug){
         drugService.addDrug(drug);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteDrug")
     @ApiOperation(value = "删除某个药品")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteDrug(@ApiParam(name = "drugId", value = "药品ID", required = true) @RequestParam Integer drugId){
+    public ResultData<Object> deleteDrug(@ApiParam(name = "drugId", value = "药品ID", required = true) @RequestParam Integer drugId){
         drugService.deleteDrug(drugId);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateDrug")
     @ApiOperation(value = "更新某个药品")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateDrug(@Validated @RequestBody DrugUd drug){
+    public ResultData<Object> updateDrug(@Validated @RequestBody DrugUd drug){
         drugService.updateDrug(drug);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 药品分类 **/
@@ -88,17 +88,17 @@ public class DrugController {
     @PostMapping("addDrugclass")
     @ApiOperation(value = "新增药品分类")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addDrugclass(@Validated @RequestBody Drugclass drugclass){
+    public ResultData<Object> addDrugclass(@Validated @RequestBody Drugclass drugclass){
         drugService.addDrugclass(drugclass);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateDrugclass")
     @ApiOperation(value = "更新某个药品分类")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateDrugclass(@Validated @RequestBody DrugclassUd drugclass){
+    public ResultData<Object> updateDrugclass(@Validated @RequestBody DrugclassUd drugclass){
         drugService.updateDrugclass(drugclass);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteDrugclass")
@@ -130,25 +130,25 @@ public class DrugController {
     @PostMapping("addIngredient")
     @ApiOperation(value = "新增成分")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addIngredient(@Validated @RequestBody Ingredient ingredient){
+    public ResultData<Object> addIngredient(@Validated @RequestBody Ingredient ingredient){
         drugService.addIngredient(ingredient);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("updateIngredient")
     @ApiOperation(value = "更新某个成分")
     @SercurValidate(type = SercurValidateEnum.UPDATE)
-    public Result updateIngredient(@Validated @RequestBody IngredientUd ingredient){
+    public ResultData<Object> updateIngredient(@Validated @RequestBody IngredientUd ingredient){
         drugService.updateIngredient(ingredient);
-        return Result.success();
+        return ResultData.success();
     }
 
     @PostMapping("deleteIngredient")
     @ApiOperation(value = "删除某个成分")
     @SercurValidate(type = SercurValidateEnum.DELETE)
-    public Result deleteIngredient(@ApiParam(name = "ingredientId", value = "成分ID", required = true) @RequestParam Integer ingredientId){
+    public ResultData<Object> deleteIngredient(@ApiParam(name = "ingredientId", value = "成分ID", required = true) @RequestParam Integer ingredientId){
         drugService.deleteIngredient(ingredientId);
-        return Result.success();
+        return ResultData.success();
     }
 
     /** 药品成分 **/
@@ -171,9 +171,28 @@ public class DrugController {
     @PostMapping("addDrugIngrdt")
     @ApiOperation(value = "新增药品成分")
     @SercurValidate(type = SercurValidateEnum.INSERT)
-    public Result addDrugIngrdt(@Validated @RequestBody DrugIngrdt drugIngrdt){
+    public ResultData<Object> addDrugIngrdt(@Validated @RequestBody DrugIngrdt drugIngrdt){
         drugService.addDrugIngrdt(drugIngrdt);
-        return Result.success();
+        return ResultData.success();
     }
+
+    @PostMapping("updateDrugIngrdt")
+    @ApiOperation(value = "更新药品成分")
+    @SercurValidate(type = SercurValidateEnum.UPDATE)
+    public ResultData<Object> updateDrugIngrdt(@Validated @RequestBody DrugIngrdtUd drugIngrdt){
+        drugService.updateDrugIngrdt(drugIngrdt);
+        return ResultData.success();
+    }
+
+    @PostMapping("deleteDrugIngrdt")
+    @ApiOperation(value = "删除某个药品成分")
+    @SercurValidate(type = SercurValidateEnum.DELETE)
+    public ResultData<Object> deleteDrugIngrdt(@ApiParam(name = "drugIngrdtId", value = "药品成分ID", required = true) @RequestParam Integer drugIngrdtId){
+        drugService.deleteDrugIngrdt(drugIngrdtId);
+        return ResultData.success();
+    }
+
+
+
 
 }

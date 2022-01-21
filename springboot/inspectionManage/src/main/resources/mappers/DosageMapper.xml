@@ -1,0 +1,667 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DosageMapper">
+
+    <select id="queryFreqList" parameterType="FreqParam" resultType="FreqVo" >
+        SELECT
+            m.freq_id as freqId,
+            m.freq_name as freqName,
+            m.freq_value as freqValue,
+            m.freq_value_unit as freqValueUnit,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_frequency m
+        where  1=1
+        <if test="freqName != null and freqName != ''">
+            and m.freq_name like concat('%', #{freqName}, '%')
+        </if>
+        <if test="freqValue != null">
+            and m.freq_value = #{freqValue}
+        </if>
+        order by m.freq_id desc
+    </select>
+
+    <select id="getFreqById" parameterType="int" resultType="FreqVo" >
+        SELECT
+            m.freq_id as freqId,
+            m.freq_name as freqName,
+            m.freq_value as freqValue,
+            m.freq_value_unit as freqValueUnit,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_frequency m
+        where
+            m.freq_id = #{freqId}
+    </select>
+
+    <insert id="addFreq" parameterType="Freq">
+        insert into t_frequency
+        (
+            freq_name,
+            freq_value,
+            freq_value_unit,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{freqName},
+            #{freqValue},
+            #{freqValueUnit},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateFreq" parameterType="FreqUd">
+        UPDATE
+            t_frequency
+        SET
+            freq_name = #{freqName},
+            freq_value = #{freqValue},
+            freq_value_unit = #{freqValueUnit},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            freq_id = #{freqId}
+    </update>
+
+    <delete id="deleteFreq" parameterType="int">
+        DELETE FROM t_frequency where freq_id = #{freqId}
+    </delete>
+
+    <select id="queryAgesclassList" parameterType="AgesclassParam" resultType="AgesclassVo" >
+        SELECT
+            m.agesclass_id as agesclassId,
+            m.sup_agesclass_id as supAgesclassId,
+            m.agesclass_name as agesclassName,
+            m.agesclass_level as agesclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_agesclass m
+        where  1=1
+        <if test="agesclassName != null and agesclassName != ''">
+            and m.agesclass_name like concat('%', #{agesclassName}, '%')
+        </if>
+            order by m.agesclass_id desc
+    </select>
+
+    <select id="getAgesclassById" parameterType="int" resultType="AgesclassVo" >
+        SELECT
+            m.agesclass_id as agesclassId,
+            m.sup_agesclass_id as supAgesclassId,
+            m.agesclass_name as agesclassName,
+            m.agesclass_level as agesclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_agesclass m
+        where
+            m.agesclass_id = #{agesclassId}
+    </select>
+
+    <insert id="addAgesclass" parameterType="Agesclass">
+        insert into t_agesclass
+        (
+            <if test="supAgesclassId != null">
+                sup_agesclass_id,
+            </if>
+            agesclass_name,
+            agesclass_level,
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supAgesclassId != null">
+                #{supAgesclassId},
+            </if>
+            #{agesclassName},
+            #{agesclassLevel},
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateAgesclass" parameterType="AgesclassUd">
+        UPDATE
+            t_agesclass
+        SET
+            <if test="supAgesclassId != null">
+                sup_agesclass_id = #{supAgesclassId},
+            </if>
+            agesclass_name = #{agesclassName},
+            agesclass_level = #{agesclassLevel},
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            agesclass_id = #{agesclassId}
+    </update>
+
+    <delete id="deleteAgesclass" parameterType="int">
+        DELETE FROM t_agesclass where agesclass_id = #{agesclassId}
+    </delete>
+
+    <select id="queryAgesList" parameterType="AgesParam" resultType="AgesVo" >
+        SELECT
+            m.ages_id as agesId,
+            m.agesclass_id as agesclassId,
+            n.agesclass_name as agesclassName,
+            m.ages_name as agesName,
+            m.min_month_age as minMonthAge,
+            m.max_month_age as maxMonthAge,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_ages m left join t_agesclass n on m.agesclass_id = n.agesclass_id
+        where  1=1
+        <if test="agesName != null and agesName != ''">
+            and m.ages_name like concat('%', #{agesName}, '%')
+        </if>
+        order by m.ages_id desc
+    </select>
+
+    <select id="getAgesById" parameterType="int" resultType="AgesVo" >
+        SELECT
+            m.ages_id as agesId,
+            m.agesclass_id as agesclassId,
+            n.agesclass_name as agesclassName,
+            m.ages_name as agesName,
+            m.min_month_age as minMonthAge,
+            m.max_month_age as maxMonthAge,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_ages m left join t_agesclass n on m.agesclass_id = n.agesclass_id
+        where
+            m.ages_id = #{agesId}
+    </select>
+
+    <insert id="addAges" parameterType="Ages">
+        insert into t_ages
+        (
+            agesclass_id,
+            ages_name,
+            min_month_age,
+            max_month_age,
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{agesclassId},
+            #{agesName},
+            #{minMonthAge},
+            #{maxMonthAge},
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateAges" parameterType="AgesUd">
+        UPDATE
+            t_ages
+        SET
+            agesclass_id = #{agesclassId},
+            ages_name = #{agesName},
+            min_month_age = #{minMonthAge},
+            max_month_age = #{maxMonthAge},
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            ages_id = #{agesId}
+    </update>
+
+    <delete id="deleteAges" parameterType="int">
+        DELETE FROM t_ages where ages_id = #{agesId}
+    </delete>
+
+    <select id="queryDosageDiseaAgesList" parameterType="DosageDiseaAgesParam" resultType="DosageDiseaAgesVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.ages_id as agesId,
+            t1.freq_id as freqId,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.ages_name as agesName,
+            t5.freq_name as freqName,
+            t6.disease_name as diseaseName
+        FROM
+            t_dosage_disease_ages t1
+                left join t_drug t2 on t1.drug_id = t2.drug_id
+                left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+                left join t_ages t4 on t1.ages_id = t4.ages_id
+                left join t_frequency t5 on t1.freq_id = t5.freq_id
+                left join t_disease t6 on t1.disease_id = t6.disease_id
+        where  1=1
+        <if test="commonName != null and commonName != ''">
+            and t2.common_name like concat('%', #{commonName}, '%')
+        </if>
+        <if test="spec != null">
+            and t3.spec = #{spec}
+        </if>
+        <if test="agesName != null and agesName != ''">
+            and t4.ages_name like concat('%', #{agesName}, '%')
+        </if>
+        <if test="diseaseName != null and diseaseName != ''">
+            and t6.disease_name like concat('%', #{diseaseName}, '%')
+        </if>
+        order by t1.drug_id desc
+    </select>
+
+
+    <select id="getDosageDiseaAgesById" resultType="DosageDiseaAgesVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.ages_id as agesId,
+            t1.freq_id as freqId,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.ages_name as agesName,
+            t5.freq_name as freqName,
+            t6.disease_name as diseaseName
+        FROM
+            t_dosage_disease_ages t1
+                left join t_drug t2 on t1.drug_id = t2.drug_id
+                left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+                left join t_ages t4 on t1.ages_id = t4.ages_id
+                left join t_frequency t5 on t1.freq_id = t5.freq_id
+                left join t_disease t6 on t1.disease_id = t6.disease_id
+        where  1=1
+            and t1.drug_id = #{drugId}
+            and t1.spec_id = #{specId}
+            and t1.disease_id = #{diseaseId}
+            and t1.ages_id = #{agesId}
+    </select>
+
+    <insert id="addDosageDiseaAges" parameterType="DosageDiseaAges">
+        insert into t_dosage_disease_ages
+        (
+            drug_id,
+            spec_id,
+            disease_id,
+            ages_id,
+            freq_id,
+            ord_dose,
+            min_dose,
+            max_dose,
+            dose_unit,
+            limit_days,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{specId},
+            #{diseaseId},
+            #{agesId},
+            #{freqId},
+            #{ordDose},
+            #{minDose},
+            #{maxDose},
+            #{doseUnit},
+            #{limitDays},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDosageDiseaAges" parameterType="DosageDiseaAgesUd">
+        UPDATE
+            t_dosage_disease_ages
+        SET
+            freq_id = #{freqId},
+            ord_dose = #{ordDose},
+            min_dose = #{minDose},
+            max_dose = #{maxDose},
+            dose_unit = #{doseUnit},
+            limit_days = #{limitDays},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_id = #{drugId}
+            and spec_id = #{specId}
+            and disease_id = #{diseaseId}
+            and ages_id = #{agesId}
+    </update>
+
+    <delete id="deleteDosageDiseaAges">
+        DELETE FROM t_dosage_disease_ages
+        where drug_id = #{drugId}
+            and spec_id = #{specId}
+            and disease_id = #{diseaseId}
+            and ages_id = #{agesId}
+    </delete>
+
+    <select id="queryDosageDiseaWeightList" parameterType="DosageDiseaWeightParam" resultType="DosageDiseaWeightVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.freq_id as freqId,
+            t1.min_weight as minWeight,
+            t1.max_weight as maxWeight,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.disease_name as diseaseName,
+            t5.freq_name as freqName
+        FROM
+            t_dosage_disease_weight t1
+                left join t_drug t2 on t1.drug_id = t2.drug_id
+                left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+                left join t_disease t4 on t1.disease_id = t4.disease_id
+                left join t_frequency t5 on t1.freq_id = t5.freq_id
+        where  1=1
+            <if test="commonName != null and commonName != ''">
+                and t2.common_name like concat('%', #{commonName}, '%')
+            </if>
+            <if test="spec != null">
+                and t3.spec = #{spec}
+            </if>
+            <if test="diseaseName != null and diseaseName != ''">
+                and t4.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+        order by t1.drug_id desc
+    </select>
+
+    <select id="getDosageDiseaWeightById"  resultType="DosageDiseaWeightVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.freq_id as freqId,
+            t1.min_weight as minWeight,
+            t1.max_weight as maxWeight,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.disease_name as diseaseName,
+            t5.freq_name as freqName
+        FROM
+            t_dosage_disease_weight t1
+        left join t_drug t2 on t1.drug_id = t2.drug_id
+        left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+        left join t_disease t4 on t1.disease_id = t4.disease_id
+        left join t_frequency t5 on t1.freq_id = t5.freq_id
+        where  1=1
+            and t1.drug_id = #{drugId}
+            and t1.spec_id = #{specId}
+            and t1.disease_id = #{diseaseId}
+            and t1.min_weight = #{minWeight}
+            and t1.max_weight = #{maxWeight}
+    </select>
+
+    <insert id="addDosageDiseaWeight" parameterType="DosageDiseaWeight">
+        insert into t_dosage_disease_weight
+        (
+            drug_id,
+            spec_id,
+            disease_id,
+            freq_id,
+            min_weight,
+            max_weight,
+            ord_dose,
+            min_dose,
+            max_dose,
+            dose_unit,
+            limit_days,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{specId},
+            #{diseaseId},
+            #{freqId},
+            #{minWeight},
+            #{maxWeight},
+            #{ordDose},
+            #{minDose},
+            #{maxDose},
+            #{doseUnit},
+            #{limitDays},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDosageDiseaWeight" parameterType="DosageDiseaWeightUd">
+        UPDATE
+            t_dosage_disease_weight
+        SET
+            freq_id = #{freqId},
+            ord_dose = #{ordDose},
+            min_dose = #{minDose},
+            max_dose = #{maxDose},
+            dose_unit = #{doseUnit},
+            limit_days = #{limitDays},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_id = #{drugId}
+            and spec_id = #{specId}
+            and disease_id = #{diseaseId}
+            and min_weight = #{minWeight}
+            and max_weight = #{maxWeight}
+    </update>
+
+    <delete id="deleteDosageDiseaWeight">
+        DELETE FROM t_dosage_disease_weight
+            where
+                drug_id = #{drugId}
+                and spec_id = #{specId}
+                and disease_id = #{diseaseId}
+                and min_weight = #{minWeight}
+                and max_weight = #{maxWeight}
+    </delete>
+
+    <select id="queryDosageDiseaAgesWeightList" parameterType="DosageDiseaAgesWeightParam" resultType="DosageDiseaAgesWeightVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.ages_id as agesId,
+            t1.min_weight as minWeight,
+            t1.max_weight as maxWeight,
+            t1.freq_id as freqId,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.ages_name as agesName,
+            t5.freq_name as freqName,
+            t6.disease_name as diseaseName
+        FROM
+            t_dosage_disease_ages_weight t1
+                left join t_drug t2 on t1.drug_id = t2.drug_id
+                left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+                left join t_ages t4 on t1.ages_id = t4.ages_id
+                left join t_frequency t5 on t1.freq_id = t5.freq_id
+                left join t_disease t6 on t1.disease_id = t6.disease_id
+        where  1=1
+            <if test="commonName != null and commonName != ''">
+                and t2.common_name like concat('%', #{commonName}, '%')
+            </if>
+            <if test="spec != null">
+                and t3.spec = #{spec}
+            </if>
+            <if test="agesName != null and agesName != ''">
+                and t4.ages_name like concat('%', #{agesName}, '%')
+            </if>
+            <if test="diseaseName != null and diseaseName != ''">
+                and t6.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+        order by t1.drug_id desc
+    </select>
+
+    <select id="getDosageDiseaAgesWeightById" resultType="DosageDiseaAgesWeightVo" >
+        SELECT
+            t1.drug_id as drugId,
+            t1.spec_id as specId,
+            t1.disease_id as diseaseId,
+            t1.ages_id as agesId,
+            t1.min_weight as minWeight,
+            t1.max_weight as maxWeight,
+            t1.freq_id as freqId,
+            t1.ord_dose as ordDose,
+            t1.min_dose as minDose,
+            t1.max_dose as maxDose,
+            t1.dose_unit as doseUnit,
+            t1.limit_days as limitDays,
+            t1.creator as creator,
+            t1.create_time as createTime,
+            t2.common_name as commonName,
+            t3.spec as spec,
+            t4.ages_name as agesName,
+            t5.freq_name as freqName,
+            t6.disease_name as diseaseName
+        FROM
+            t_dosage_disease_ages_weight t1
+        left join t_drug t2 on t1.drug_id = t2.drug_id
+        left join t_appr_spec t3 on t1.spec_id = t3.spec_id
+        left join t_ages t4 on t1.ages_id = t4.ages_id
+        left join t_frequency t5 on t1.freq_id = t5.freq_id
+        left join t_disease t6 on t1.disease_id = t6.disease_id
+        where  1=1
+            and t1.drug_id = #{drugId}
+            and t1.spec_id = #{specId}
+            and t1.disease_id = #{diseaseId}
+            and t1.ages_id = #{agesId}
+            and t1.min_weight = #{minWeight}
+            and t1.max_weight = #{maxWeight}
+
+    </select>
+
+    <insert id="adDosageDiseaAgesWeight" parameterType="DosageDiseaAgesWeight">
+        insert into t_dosage_disease_ages_weight
+        (
+            drug_id,
+            spec_id,
+            disease_id,
+            ages_id,
+            min_weight,
+            max_weight,
+            freq_id,
+            ord_dose,
+            min_dose,
+            max_dose,
+            dose_unit,
+            limit_days,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{specId},
+            #{diseaseId},
+            #{agesId},
+            #{minWeight},
+            #{maxWeight},
+            #{freqId},
+            #{ordDose},
+            #{minDose},
+            #{maxDose},
+            #{doseUnit},
+            #{limitDays},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDosageDiseaAgesWeight" parameterType="DosageDiseaAgesWeightUd">
+        UPDATE
+            t_dosage_disease_ages_weight
+        SET
+            freq_id = #{freqId},
+            ord_dose = #{ordDose},
+            min_dose = #{minDose},
+            max_dose = #{maxDose},
+            dose_unit = #{doseUnit},
+            limit_days = #{limitDays},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_id = #{drugId}
+            and spec_id = #{specId}
+            and disease_id = #{diseaseId}
+            and ages_id = #{agesId}
+            and min_weight = #{minWeight}
+            and max_weight = #{maxWeight}
+    </update>
+
+    <delete id="deleteDosageDiseaAgesWeight">
+        DELETE FROM
+            t_dosage_disease_ages_weight
+        where drug_id = #{drugId}
+                and spec_id = #{specId}
+                and disease_id = #{diseaseId}
+                and ages_id = #{agesId}
+                and min_weight = #{minWeight}
+                and max_weight = #{maxWeight}
+    </delete>
+
+</mapper>

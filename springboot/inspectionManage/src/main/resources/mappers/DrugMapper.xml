@@ -312,5 +312,23 @@
         )
     </insert>
 
+    <update id="updateDrugIngrdt" parameterType="DrugIngrdtUd">
+        UPDATE
+            t_drug_ingredient
+        SET
+            drug_id = #{drugId},
+            ingredient_id = #{ingredientId},
+            <if test="num != null">
+                num = #{num},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit}
+            </if>
+        WHERE
+            drug_ingrdt_id = #{drugIngrdtId}
+    </update>
 
+    <delete id="deleteDrugIngrdt" parameterType="int">
+        DELETE FROM t_drug_ingredient where drug_ingrdt_id = #{drugIngrdtId}
+    </delete>
 </mapper>

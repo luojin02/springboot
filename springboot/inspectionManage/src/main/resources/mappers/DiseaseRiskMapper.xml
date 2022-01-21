@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DiseaseRiskMapper">
+
+    <select id="queryDiseaseRiskList" parameterType="DiseaseRiskParam" resultType="DiseaseRiskVo" >
+        SELECT
+            m.disease_risk_id as diseaseRiskId,
+            m.disease_id as diseaseId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.disease_name as diseaseName
+        FROM
+            t_disease_risk m left join t_disease n on m.disease_id = n.disease_id
+        where  1=1
+            <if test="riskLevel != null">
+                and m.risk_level = #{riskLevel}
+            </if>
+            <if test="diseaseName != null and diseaseName != ''">
+                and n.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+            order by m.disease_risk_id desc
+    </select>
+
+    <select id="getDiseaseRiskById" parameterType="int" resultType="DiseaseRiskVo" >
+        SELECT
+            m.disease_risk_id as diseaseRiskId,
+            m.disease_id as diseaseId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.disease_name as diseaseName
+        FROM
+            t_disease_risk m left join t_disease n on m.disease_id = n.disease_id
+        where
+            m.disease_risk_id = #{diseaseRiskId}
+    </select>
+
+    <insert id="addDiseaseRisk" parameterType="DiseaseRisk">
+        insert into t_disease_risk
+        (
+            disease_id,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{diseaseId},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDiseaseRisk" parameterType="DiseaseDiseaseUd">
+        UPDATE
+            t_disease_risk
+        SET
+            disease_id = #{diseaseId},
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            disease_risk_id = #{diseaseRiskId}
+    </update>
+
+    <delete id="deleteDiseaseRisk" parameterType="int">
+        DELETE FROM t_disease_risk where disease_risk_id = #{diseaseRiskId}
+    </delete>
+
+    <select id="queryDiseaseGenderRiskList" parameterType="DiseaseGenderRiskParam" resultType="DiseaseGengerRiskVo" >
+        SELECT
+            m.disease_id as diseaseId,
+            m.gender as gender,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.disease_name as diseaseName
+        FROM
+            t_disease_gender_risk m left join t_disease n on m.disease_id = n.disease_id
+        where  1=1
+            <if test="riskLevel != null">
+                and m.risk_level = #{riskLevel}
+            </if>
+            <if test="gender != null">
+                and m.gender = #{gender}
+            </if>
+            <if test="diseaseName != null and diseaseName != ''">
+                and n.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+            order by m.disease_id desc
+    </select>
+
+    <select id="getDiseaseGenderRiskById" resultType="DiseaseGengerRiskVo" >
+        SELECT
+            m.disease_id as diseaseId,
+            m.gender as gender,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.disease_name as diseaseName
+        FROM
+            t_disease_gender_risk m left join t_disease n on m.disease_id = n.disease_id
+        where  1=1
+            and m.disease_id = #{diseaseId}
+            and m.gender = #{gender}
+    </select>
+
+    <insert id="addDiseaseGenderRisk" parameterType="DiseaseGenderRisk">
+        insert into t_disease_gender_risk
+        (
+            disease_id,
+            gender,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{diseaseId},
+            #{gender},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDiseaseGenderRisk" parameterType="DiseaseGenderRiskUd">
+        UPDATE
+            t_disease_gender_risk
+        SET
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time = now()
+        WHERE
+            disease_id = #{diseaseId}
+            and gender = #{gender}
+    </update>
+
+    <delete id="deleteDiseaseGenderRisk" parameterType="int">
+        DELETE FROM t_disease_gender_risk
+        WHERE
+            disease_id = #{diseaseId}
+            and gender = #{gender}
+    </delete>
+</mapper>

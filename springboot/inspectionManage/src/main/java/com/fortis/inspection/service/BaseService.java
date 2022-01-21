@@ -54,4 +54,25 @@ public class BaseService {
         }
         return list_level_1;
     }
+
+    public String thread() {
+
+        new Thread(){
+            @Override
+            public void run() {
+
+                try {
+                    System.out.println("bb");
+
+                    throw new Exception();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+
+        return "aa";
+
+    }
 }

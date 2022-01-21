@@ -48,6 +48,11 @@ public class DrugBaseMsgService {
         drugBaseMsgMapper.updateLabelClass(param);
     }
 
+    public List<Integer> getLabelClassLevelList(){
+        List<Integer> list = drugBaseMsgMapper.getLabelClassLevelList();
+        return list;
+    }
+
     public PageInfo<LabelVo> queryLabelList(LabelParam param){
         if(ObjectUtils.isEmpty(param.getPageNum())||ObjectUtils.isEmpty(param.getPageSize())){
             throw new InspectException(InspectExceptionTypeEnum.PARAM_IS_EMPTY,InspectExceptionTypeEnum.PARAM_IS_EMPTY.getMsg());

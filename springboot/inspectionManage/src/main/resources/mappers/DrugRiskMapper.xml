@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DrugRiskMapper">
+
+    <select id="queryDrugRiskList" parameterType="DrugRiskParam" resultType="DrugRiskVo" >
+        SELECT
+            m.drug_risk_id as drugRiskId,
+            m.drug_id as drugId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName
+        FROM
+            t_drug_risk m left join t_drug n on m.drug_id = n.drug_id
+        where  1=1
+        <if test="riskLevel != null">
+            and m.risk_level = #{riskLevel}
+        </if>
+        <if test="commonName != null and commonName != ''">
+            and n.common_name like concat('%', #{commonName}, '%')
+        </if>
+        order by m.drug_risk_id desc
+    </select>
+
+    <select id="getDrugRiskById" parameterType="int" resultType="DrugRiskVo" >
+        SELECT
+            m.drug_risk_id as drugRiskId,
+            m.drug_id as drugId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName
+        FROM
+            t_drug_risk m left join t_drug n on m.drug_id = n.drug_id
+        where
+            m.drug_risk_id = #{drugRiskId}
+    </select>
+
+    <insert id="addDrugRisk" parameterType="DrugRisk">
+        insert into t_drug_risk
+        (
+            drug_id,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDrugRisk" parameterType="DrugRiskUd">
+        UPDATE
+            t_drug_risk
+        SET
+            drug_id = #{drugId},
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_risk_id = #{drugRiskId}
+    </update>
+
+    <delete id="deleteDrugRisk" parameterType="int">
+        DELETE FROM t_drug_risk where drug_risk_id = #{drugRiskId}
+    </delete>
+
+    <select id="queryDrugAgesRiskList" parameterType="DrugAgesRiskParam" resultType="DrugAgesRiskVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.ages_id as agesId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName,
+            k.ages_name as agesName
+        FROM
+            t_drug_ages_risk m left join t_drug n on m.drug_id = n.drug_id
+                left join t_ages k on m.ages_id = k.ages_id
+        where  1=1
+        <if test="riskLevel != null">
+            and m.risk_level = #{riskLevel}
+        </if>
+        <if test="commonName != null and commonName != ''">
+            and n.common_name like concat('%', #{commonName}, '%')
+        </if>
+        <if test="agesName != null and agesName != ''">
+            and k.ages_name like concat('%', #{agesName}, '%')
+        </if>
+        order by m.drug_id desc
+    </select>
+
+    <select id="getDrugAgesRiskById" resultType="DrugAgesRiskVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.ages_id as agesId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName,
+            k.ages_name as agesName
+        FROM
+            t_drug_ages_risk m left join t_drug n on m.drug_id = n.drug_id
+            left join t_ages k on m.ages_id = k.ages_id
+        where  1=1
+            and m.drug_id = #{drugId}
+            and m.ages_id = #{agesId}
+    </select>
+
+    <insert id="addDrugAgesRisk" parameterType="DrugAgesRisk">
+        insert into t_drug_ages_risk
+        (
+            drug_id,
+            ages_id,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{agesId},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDrugAgesRisk" parameterType="DrugAgesRiskUd">
+        UPDATE
+            t_drug_ages_risk
+        SET
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            drug_id = #{drugId}
+            and ages_id = #{agesId}
+    </update>
+
+    <delete id="deleteDrugAgesRisk" parameterType="int">
+        DELETE FROM t_drug_ages_risk
+        WHERE
+            drug_id = #{drugId}
+            and ages_id = #{agesId}
+    </delete>
+
+    <select id="queryIngreRiskList" parameterType="IngreRiskParam" resultType="IngreRiskVo" >
+        SELECT
+            m.ingredient_id1 as ingredientId1,
+            m.ingredient_id2 as ingredientId2,
+            m.is_conflict as isConflict,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.ingredient as ingredient1,
+            k.ingredient as ingredient2
+        FROM
+            t_ingredient_risk m left join t_ingredient n on m.ingredient_id1 = n.ingredient_id
+            left join t_ingredient k on m.ingredient_id2 = k.ingredient_id
+        where  1=1
+            <if test="riskLevel != null">
+                and m.risk_level = #{riskLevel}
+            </if>
+            <if test="ingredient1 != null and ingredient1 != ''">
+                and n.ingredient like concat('%', #{ingredient1}, '%')
+            </if>
+            <if test="ingredient2 != null and ingredient2 != ''">
+                and k.ingredient like concat('%', #{ingredient2}, '%')
+            </if>
+            order by m.ingredient_id1 desc
+    </select>
+
+    <select id="getIngreRiskById" resultType="IngreRiskVo" >
+        SELECT
+            m.ingredient_id1 as ingredientId1,
+            m.ingredient_id2 as ingredientId2,
+            m.is_conflict as isConflict,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.ingredient as ingredient1,
+            k.ingredient as ingredient2
+        FROM
+            t_ingredient_risk m left join t_ingredient n on m.ingredient_id1 = n.ingredient_id
+            left join t_ingredient k on m.ingredient_id2 = k.ingredient_id
+        where  1=1
+            and m.ingredient_id1 = #{ingredientId1}
+            and m.ingredient_id2 = #{ingredientId2}
+
+    </select>
+
+    <insert id="addIngreRisk" parameterType="IngreRisk">
+        insert into t_ingredient_risk
+        (
+            ingredient_id1,
+            ingredient_id2,
+            is_conflict,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{ingredientId1},
+            #{ingredientId2},
+            #{isConflict},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateIngreRisk" parameterType="IngreRiskUd">
+        UPDATE
+            t_ingredient_risk
+        SET
+            is_conflict = #{isConflict},
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time = now()
+        WHERE
+            ingredient_id1 = #{ingredientId1}
+            and ingredient_id2 = #{ingredientId2}
+    </update>
+
+    <delete id="deleteIngreRisk" parameterType="int">
+        DELETE FROM t_ingredient_risk
+        WHERE
+            ingredient_id1 = #{ingredientId1}
+            and ingredient_id2 = #{ingredientId2}
+    </delete>
+</mapper>

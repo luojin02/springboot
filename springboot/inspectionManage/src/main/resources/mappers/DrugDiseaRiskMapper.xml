@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DrugDiseaRiskMapper">
+
+    <select id="queryDrugDiseaRiskList" parameterType="DrugDiseaRiskParam" resultType="DrugDiseaRiskVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.disease_id as diseaseId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName,
+            k.disease_name as diseaseName
+        FROM
+            t_drug_disease_risk m left join t_drug n on m.drug_id = n.drug_id
+                left join t_disease k on m.disease_id = k.disease_id
+        where  1=1
+            <if test="riskLevel != null">
+                and m.risk_level = #{riskLevel}
+            </if>
+            <if test="commonName != null and commonName != ''">
+                and n.common_name like concat('%', #{commonName}, '%')
+            </if>
+            <if test="diseaseName != null and diseaseName != ''">
+                and k.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+         order by m.drug_id desc
+    </select>
+
+    <select id="getDrugDiseaRiskById"  resultType="DrugDiseaRiskVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.disease_id as diseaseId,
+            m.risk_level as riskLevel,
+            m.risk_desc as riskDesc,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName,
+            k.disease_name as diseaseName
+        FROM
+            t_drug_disease_risk m left join t_drug n on m.drug_id = n.drug_id
+                left join t_disease k on m.disease_id = k.disease_id
+        where  1=1
+            and m.drug_id = #{drugId}
+            and m.disease_id = #{diseaseId}
+    </select>
+
+    <insert id="addDrugDiseaRisk" parameterType="DrugDiseaRisk">
+        insert into t_drug_disease_risk
+        (
+            drug_id,
+            disease_id,
+            risk_level,
+            risk_desc,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{diseaseId},
+            #{riskLevel},
+            #{riskDesc},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDrugDiseaRisk" parameterType="DrugDiseaRiskUd">
+        UPDATE
+            t_drug_disease_risk
+        SET
+            risk_level = #{riskLevel},
+            risk_desc = #{riskDesc},
+            modifier = #{modifier},
+            modify_time = now()
+        WHERE
+            drug_id = #{drugId}
+            and disease_id = #{diseaseId}
+    </update>
+
+    <delete id="deleteDrugDiseaRisk" parameterType="int">
+        DELETE FROM t_drug_disease_risk
+        WHERE
+            drug_id = #{drugId}
+            and disease_id = #{diseaseId}
+    </delete>
+
+    <select id="queryDrugIndicationList" parameterType="DrugIndicationParam" resultType="DrugIndicationVo">
+        select
+            t1.drugId,
+            t1.indicationType,
+            t1.indicationId,
+            t1.indicationName,
+            t1.creator,
+            t1.createTime,
+            t1.commonName
+        from
+            (SELECT
+                m.drug_id as drugId,
+                m.indication_type as indicationType,
+                m.indication_id as indicationId,
+                case when m.indication_type = 1 then
+                (select
+                        disease_name
+                    FROM
+                        t_disease
+                    where disease_id = m.indication_id
+                )
+                ELSE
+                (
+                select
+                        symptom_name
+                    FROM
+                    t_symptom
+                    where symptom_id =m.indication_id
+                )
+                end as indicationName,
+                m.creator as creator,
+                m.create_time as createTime,
+                n.common_name as commonName
+            FROM
+                t_drug_indication m left join t_drug n on m.drug_id = n.drug_id
+            where  1=1
+            <if test="commonName != null and commonName != ''">
+                and n.common_name like concat('%', #{commonName}, '%')
+            </if>
+        )t1
+        where  1=1
+        <if test="indicationName != null and indicationName != ''">
+            and t1.indicationName like concat('%', #{indicationName}, '%')
+        </if>
+        order by t1.drugId desc
+    </select>
+
+    <select id="getDrugIndicationById" resultType="DrugIndicationVo" >
+        SELECT
+            m.drug_id as drugId,
+            m.indication_type as indicationType,
+            m.indication_id as indicationId,
+            case when m.indication_type = 1 then
+            (select
+                    disease_name
+                FROM
+                    t_disease
+                where disease_id = m.indication_id
+            )
+            ELSE
+            (
+            select
+                    symptom_name
+                FROM
+                    t_symptom
+                where symptom_id =m.indication_id
+            )
+            end as indicationName,
+            m.creator as creator,
+            m.create_time as createTime,
+            n.common_name as commonName
+        FROM
+            t_drug_indication m left join t_drug n on m.drug_id = n.drug_id
+        where  1=1
+            and m.drug_id = #{drugId}
+            and m.indication_type = #{indicationType}
+            and m.indication_id = #{indicationId}
+    </select>
+
+    <insert id="addDrugIndication" parameterType="DrugIndication">
+        insert into t_drug_indication
+        (
+            drug_id,
+            indication_type,
+            indication_id,
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{drugId},
+            #{indicationType},
+            #{indicationId},
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <delete id="deleteDrugIndication" parameterType="int">
+        DELETE FROM t_drug_indication
+        WHERE
+            drug_id = #{drugId}
+            and indication_type = #{indicationType}
+            and indication_id = #{indicationId}
+    </delete>
+</mapper>

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class Drug implements Serializable {
     private static final long serialVersionUID = -918840941558485353L;
 
-    @ApiModelProperty(value = "通用名称",dataType = "int",required = true)
+    @ApiModelProperty(value = "通用名称",dataType = "string",required = true)
     @NotBlank(message = "commonName 不能为空")
     @Getter
     @Setter

@@ -5,43 +5,51 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
-@ApiModel("新增规格实体")
+@ApiModel("更新规格实体")
 public class ApprSpecUd implements Serializable {
     private static final long serialVersionUID = 6681560165956073062L;
 
-    @ApiModelProperty("规格编号")
+    @ApiModelProperty(value = "规格编号",dataType = "int",required = true)
+    @NotBlank(message = "apprId 不能为空")
     @Getter
     @Setter
     private Integer specId;
 
-    @ApiModelProperty("批准文号编号")
+    @ApiModelProperty(value = "批准文号编号",dataType = "int",required = true)
+    @NotBlank(message = "apprId 不能为空")
     @Getter
     @Setter
     private Integer apprId;
 
-    @ApiModelProperty("规格（或剂量）")
+    @ApiModelProperty(value = "规格（或剂量）",dataType = "int",required = true)
+    @NotBlank(message = "spec 不能为空")
     @Getter
     @Setter
     private Integer spec;
 
-    @ApiModelProperty("规格单位（或剂量单位）")
+    @ApiModelProperty(value = "规格单位（或剂量单位）",dataType = "string",required = true)
+    @NotBlank(message = "specUnit 不能为空")
     @Getter
     @Setter
     private String specUnit;
 
-    @ApiModelProperty("剂型编号")
+    @ApiModelProperty(value = "剂型编号",dataType = "int",required = true)
+    @NotBlank(message = "formId 不能为空")
     @Getter
     @Setter
     private Integer formId;
 
-    @ApiModelProperty("用法编号")
+    @ApiModelProperty(value = "用法编号",dataType = "int",required = true)
+    @NotBlank(message = "usageId 不能为空")
     @Getter
     @Setter
     private Integer usageId;
 
-    @ApiModelProperty("修改者（系统帐号）")
+    @ApiModelProperty(value = "修改者（系统帐号）",dataType = "string",required = true)
+    @NotBlank(message = "modifier 不能为空")
     @Getter
     @Setter
     private String modifier;

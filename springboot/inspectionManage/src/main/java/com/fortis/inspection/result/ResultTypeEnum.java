@@ -10,7 +10,7 @@ public enum ResultTypeEnum {
     NOT_LOGIN_OR_SESSION_TIMEOUT(Integer.valueOf(403),"未登录或会话超时"),
     DATA_IS_NULL(Integer.valueOf(-10005),"数据为空"),
     PARAM_IS_EMPTY(Integer.valueOf(-10006),"参数为空"),
-    HAVE_DRUG(Integer.valueOf(-10006),"改药品类下包含药品，不可删除");;
+    HAVE_DRUG(Integer.valueOf(-10006),"该药品类下包含药品，不可删除");;
 
     private ResultTypeEnum(Integer code, String msg){
         this.code = code;

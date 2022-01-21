@@ -134,4 +134,12 @@ public class DrugService {
     public void addDrugIngrdt(DrugIngrdt drugIngrdt){
         drugMapper.addDrugIngrdt(drugIngrdt);
     }
+
+    public void updateDrugIngrdt(DrugIngrdtUd param){
+        drugMapper.updateDrugIngrdt(param);
+    }
+
+    public void deleteDrugIngrdt(Integer drugIngrdtId){
+        drugMapper.deleteDrugIngrdt(drugIngrdtId);
+    }
 }

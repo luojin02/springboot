@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fortis.inspection.mapper.DiseaseSymMapper">
+
+    <select id="querySymptomList" parameterType="SymptomParam" resultType="SymptomVo" >
+        SELECT
+            m.symptom_id as symptomId,
+            m.symptom_name as symptomName,
+            m.symptom_desc as symptomDesc,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_symptom m
+        where  1=1
+            <if test="symptomName != null and symptomName != ''">
+                and m.symptom_name like concat('%', #{symptomName}, '%')
+            </if>
+        order by m.symptom_id desc
+    </select>
+
+    <select id="getSymptomById" parameterType="int" resultType="SymptomVo" >
+        SELECT
+            m.symptom_id as symptomId,
+            m.symptom_name as symptomName,
+            m.symptom_desc as symptomDesc,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_symptom m
+        where
+            m.symptom_id = #{symptomId}
+    </select>
+
+    <insert id="addSymptom" parameterType="Symptom">
+        insert into t_symptom
+        (
+            symptom_name,
+            <if test="symptomDesc != null and symptomDesc != ''">
+                symptom_desc,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{symptomName},
+            <if test="symptomDesc != null and symptomDesc != ''">
+                #{symptomDesc},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateSymptom" parameterType="SymptomUd">
+        UPDATE
+            t_symptom
+        SET
+            symptom_name = #{symptomName},
+            <if test="symptomDesc != null and symptomDesc != ''">
+                symptom_desc = #{symptomDesc},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            symptom_id = #{symptomId}
+    </update>
+
+    <delete id="deleteSymptom" parameterType="int">
+        DELETE FROM t_symptom where symptom_id = #{symptomId}
+    </delete>
+
+    <select id="queryDiseaseList" parameterType="DiseaseParam" resultType="DiseaseVo" >
+        SELECT
+            m.disease_id as diseaseId,
+            m.norm_type as normType,
+            m.disease_name as diseaseName,
+            m.disease_code as diseaseCode,
+            m.is_chronic as isChronic,
+            m.apply_gender as applyGender,
+            m.disease_desc as diseaseDesc,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_disease m
+        where  1=1
+            <if test="diseaseName != null and diseaseName != ''">
+                and m.disease_name like concat('%', #{diseaseName}, '%')
+            </if>
+            order by m.disease_id desc
+    </select>
+
+    <select id="getDiseaseById" parameterType="int" resultType="DiseaseVo" >
+        SELECT
+            m.disease_id as diseaseId,
+            m.norm_type as normType,
+            m.disease_name as diseaseName,
+            m.disease_code as diseaseCode,
+            m.is_chronic as isChronic,
+            m.apply_gender as applyGender,
+            m.disease_desc as diseaseDesc,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_disease m
+        where
+            m.disease_id = #{diseaseId}
+    </select>
+
+    <insert id="addDisease" parameterType="Disease">
+        insert into t_disease
+        (
+            norm_type,
+            disease_name,
+            <if test="diseaseCode != null and diseaseCode != ''">
+                disease_code,
+            </if>
+            is_chronic,
+            apply_gender,
+            <if test="diseaseDesc != null and diseaseDesc != ''">
+                disease_desc,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            #{normType},
+            #{diseaseName},
+            <if test="diseaseCode != null and diseaseCode != ''">
+                #{diseaseCode},
+            </if>
+            #{isChronic},
+            #{applyGender},
+            <if test="diseaseDesc != null and diseaseDesc != ''">
+                #{diseaseDesc},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDisease" parameterType="DiseaseUd">
+        UPDATE
+            t_disease
+        SET
+            norm_type = #{normType},
+            disease_name = #{diseaseName},
+            <if test="diseaseCode != null and diseaseCode != ''">
+                disease_code = #{diseaseCode},
+            </if>
+            is_chronic = #{isChronic},
+            apply_gender = #{applyGender},
+            <if test="diseaseDesc != null and diseaseDesc != ''">
+                disease_desc = #{diseaseDesc},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            disease_id = #{diseaseId}
+    </update>
+
+    <delete id="deleteDisease" parameterType="int">
+        DELETE FROM t_disease where disease_id = #{diseaseId}
+    </delete>
+
+    <select id="queryDiseaseclassList" parameterType="DiseaseclassParam" resultType="DiseaseclassVo" >
+        SELECT
+            m.diseaseclass_id as diseaseclassId,
+            m.sup_diseaseclass_id as supDiseaseclassId,
+            m.diseaseclass_name as diseaseclassName,
+            m.diseaseclass_level as diseaseclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_diseaseclass m
+        where  1=1
+            <if test="diseaseclassName != null and diseaseclassName != ''">
+                and m.diseaseclass_name like concat('%', #{diseaseclassName}, '%')
+            </if>
+            <if test="diseaseclassLevel != null">
+                and m.diseaseclass_level = #{diseaseclassLevel}
+            </if>
+        order by m.diseaseclass_id desc
+    </select>
+
+    <select id="getDiseaseclassById" parameterType="int" resultType="DiseaseclassVo" >
+        SELECT
+            m.diseaseclass_id as diseaseclassId,
+            m.sup_diseaseclass_id as supDiseaseclassId,
+            m.diseaseclass_name as diseaseclassName,
+            m.diseaseclass_level as diseaseclassLevel,
+            m.notes as notes,
+            m.creator as creator,
+            m.create_time as createTime
+        FROM
+            t_diseaseclass m
+        where
+            m.diseaseclass_id = #{diseaseclassId}
+    </select>
+
+    <insert id="addDiseaseclass" parameterType="Diseaseclass">
+        insert into t_diseaseclass
+        (
+            <if test="supDiseaseclassId != null ">
+                sup_diseaseclass_id,
+            </if>
+            diseaseclass_name,
+            diseaseclass_level,
+            <if test="notes != null and notes != ''">
+                notes,
+            </if>
+            creator,
+            create_time
+        )
+        VALUES
+        (
+            <if test="supDiseaseclassId != null">
+                #{supDiseaseclassId},
+            </if>
+            #{diseaseclassName},
+            #{diseaseclassLevel},
+            <if test="notes != null and notes != ''">
+                #{notes},
+            </if>
+            #{creator},
+            NOW()
+        )
+    </insert>
+
+    <update id="updateDiseaseclass" parameterType="DiseaseclassUd">
+        UPDATE
+            t_diseaseclass
+        SET
+            <if test="supDiseaseclassId != null">
+                sup_diseaseclass_id = #{supDiseaseclassId},
+            </if>
+            diseaseclass_name = #{diseaseclassName},
+            diseaseclass_level = #{diseaseclassLevel},
+            <if test="notes != null and notes != ''">
+                notes = #{notes},
+            </if>
+            modifier = #{modifier},
+            modify_time =  now()
+        WHERE
+            diseaseclass_id = #{diseaseclassId}
+    </update>
+
+    <delete id="deleteDiseaseclass" parameterType="int">
+        DELETE FROM t_diseaseclass where diseaseclass_id = #{diseaseclassId}
+    </delete>
+
+</mapper>

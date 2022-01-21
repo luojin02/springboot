@@ -12,32 +12,38 @@ import java.io.Serializable;
 public class ApprSpec implements Serializable {
     private static final long serialVersionUID = 6681560165956073062L;
 
-    @ApiModelProperty("批准文号编号")
+    @ApiModelProperty(value = "批准文号编号",dataType = "int",required = true)
+    @NotBlank(message = "apprId 不能为空")
     @Getter
     @Setter
     private Integer apprId;
 
-    @ApiModelProperty("规格（或剂量）")
+    @ApiModelProperty(value = "规格（或剂量）",dataType = "int",required = true)
+    @NotBlank(message = "spec 不能为空")
     @Getter
     @Setter
     private Integer spec;
 
-    @ApiModelProperty("规格单位（或剂量单位）")
+    @ApiModelProperty(value = "规格单位（或剂量单位）",dataType = "string",required = true)
+    @NotBlank(message = "specUnit 不能为空")
     @Getter
     @Setter
     private String specUnit;
 
-    @ApiModelProperty("剂型编号")
+    @ApiModelProperty(value = "剂型编号",dataType = "int",required = true)
+    @NotBlank(message = "formId 不能为空")
     @Getter
     @Setter
     private Integer formId;
 
-    @ApiModelProperty("用法编号")
+    @ApiModelProperty(value = "用法编号",dataType = "int",required = true)
+    @NotBlank(message = "usageId 不能为空")
     @Getter
     @Setter
     private Integer usageId;
 
-    @ApiModelProperty("创建者（系统帐号）")
+    @ApiModelProperty(value = "创建者（系统帐号）",dataType = "string",required = true)
+    @NotBlank(message = "creator 不能为空")
     @Getter
     @Setter
     private String creator;
