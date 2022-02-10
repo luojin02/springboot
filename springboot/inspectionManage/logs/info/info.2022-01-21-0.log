@@ -29,3 +29,105 @@
 2022-01-21 09:37:26.393 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: queryFreqListUsingPOST_1
 2022-01-21 09:37:26.400 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: updateAgesclassUsingPOST_1
 2022-01-21 09:37:26.954 default [main] INFO  c.f.inspection.InspectionApplication - Started InspectionApplication in 25.926 seconds (JVM running for 31.309)
+2022-01-21 09:38:01.932 default [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-21 09:38:01.933 default [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-01-21 09:38:01.935 default [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2022-01-21 10:38:12.902 default [main] INFO  c.f.inspection.InspectionApplication - Starting InspectionApplication using Java 1.8.0_181 on orz-PC with PID 9888 (F:\Code\springboot\springboot\inspectionManage\target\classes started by luojin in F:\Code\springboot\springboot\inspectionManage)
+2022-01-21 10:38:12.902 default [main] INFO  c.f.inspection.InspectionApplication - No active profile set, falling back to default profiles: default
+2022-01-21 10:38:17.583 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 10:38:17.583 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-21 10:38:17.645 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 0 JPA repository interfaces.
+2022-01-21 10:38:17.739 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 10:38:17.739 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-01-21 10:38:17.832 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33 ms. Found 0 Redis repository interfaces.
+2022-01-21 10:38:20.047 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2022-01-21 10:38:20.079 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2022-01-21 10:38:20.079 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-01-21 10:38:20.079 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-01-21 10:38:20.313 default [main] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring embedded WebApplicationContext
+2022-01-21 10:38:20.313 default [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7130 ms
+2022-01-21 10:38:20.905 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-21 10:38:21.311 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-21 10:38:21.498 default [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-21 10:38:22.044 default [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-01-21 10:38:23.152 default [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-21 10:38:23.823 default [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-01-21 10:38:24.977 default [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-21 10:38:25.024 default [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-21 10:38:29.186 default [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-01-21 10:38:30.407 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2022-01-21 10:38:30.470 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path '/inspect'
+2022-01-21 10:38:30.470 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-01-21 10:38:30.657 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-01-21 10:38:30.719 default [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-01-21 10:38:31.330 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: queryFreqListUsingPOST_1
+2022-01-21 10:38:31.345 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: updateAgesclassUsingPOST_1
+2022-01-21 10:38:31.988 default [main] INFO  c.f.inspection.InspectionApplication - Started InspectionApplication in 21.783 seconds (JVM running for 25.151)
+2022-01-21 10:39:01.497 default [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-21 10:39:01.497 default [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-01-21 10:39:01.497 default [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2022-01-21 11:26:08.277 default [main] INFO  c.f.inspection.InspectionApplication - Starting InspectionApplication using Java 1.8.0_181 on orz-PC with PID 13704 (F:\Code\springboot\springboot\inspectionManage\target\classes started by luojin in F:\Code\springboot\springboot\inspectionManage)
+2022-01-21 11:26:08.281 default [main] INFO  c.f.inspection.InspectionApplication - No active profile set, falling back to default profiles: default
+2022-01-21 11:26:11.963 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 11:26:11.964 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-21 11:26:11.993 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 19 ms. Found 0 JPA repository interfaces.
+2022-01-21 11:26:12.010 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 11:26:12.012 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-01-21 11:26:12.034 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 14 ms. Found 0 Redis repository interfaces.
+2022-01-21 11:26:12.897 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2022-01-21 11:26:12.907 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2022-01-21 11:26:12.908 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-01-21 11:26:12.908 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-01-21 11:26:13.451 default [main] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring embedded WebApplicationContext
+2022-01-21 11:26:13.451 default [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5055 ms
+2022-01-21 11:26:13.833 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-21 11:26:13.991 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-21 11:26:14.162 default [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-21 11:26:15.262 default [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-01-21 11:26:16.685 default [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-21 11:26:17.573 default [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-01-21 11:26:18.600 default [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-21 11:26:18.936 default [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-21 11:26:20.735 default [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-01-21 11:26:21.257 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2022-01-21 11:26:21.352 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path '/inspect'
+2022-01-21 11:26:21.353 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-01-21 11:26:21.513 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-01-21 11:26:21.685 default [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-01-21 11:26:22.246 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: queryFreqListUsingPOST_1
+2022-01-21 11:26:22.254 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: updateAgesclassUsingPOST_1
+2022-01-21 11:26:22.818 default [main] INFO  c.f.inspection.InspectionApplication - Started InspectionApplication in 16.192 seconds (JVM running for 17.843)
+2022-01-21 14:11:32.572 default [main] INFO  c.f.inspection.InspectionApplication - Starting InspectionApplication using Java 1.8.0_181 on orz-PC with PID 19016 (F:\Code\springboot\springboot\inspectionManage\target\classes started by luojin in F:\Code\springboot\springboot\inspectionManage)
+2022-01-21 14:11:32.590 default [main] INFO  c.f.inspection.InspectionApplication - No active profile set, falling back to default profiles: default
+2022-01-21 14:11:39.877 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 14:11:39.878 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-01-21 14:11:39.919 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 0 JPA repository interfaces.
+2022-01-21 14:11:40.027 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2022-01-21 14:11:40.030 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2022-01-21 14:11:40.137 default [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 29 ms. Found 0 Redis repository interfaces.
+2022-01-21 14:11:45.840 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8085 (http)
+2022-01-21 14:11:45.903 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8085"]
+2022-01-21 14:11:45.905 default [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2022-01-21 14:11:45.906 default [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.54]
+2022-01-21 14:11:47.192 default [main] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring embedded WebApplicationContext
+2022-01-21 14:11:47.193 default [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 14370 ms
+2022-01-21 14:11:48.363 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2022-01-21 14:11:48.978 default [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2022-01-21 14:11:49.277 default [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-01-21 14:11:49.844 default [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.32.Final
+2022-01-21 14:11:51.323 default [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-01-21 14:11:52.636 default [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-01-21 14:11:53.786 default [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-01-21 14:11:54.175 default [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-01-21 14:11:58.811 default [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-01-21 14:12:00.151 default [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8085"]
+2022-01-21 14:12:00.198 default [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8085 (http) with context path '/inspect'
+2022-01-21 14:12:00.199 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+2022-01-21 14:12:00.382 default [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+2022-01-21 14:12:00.505 default [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+2022-01-21 14:12:01.320 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: queryFreqListUsingPOST_1
+2022-01-21 14:12:01.328 default [main] INFO  s.d.s.w.r.o.CachingOperationNameGenerator - Generating unique operation named: updateAgesclassUsingPOST_1
+2022-01-21 14:12:01.905 default [main] INFO  c.f.inspection.InspectionApplication - Started InspectionApplication in 31.608 seconds (JVM running for 36.811)
+2022-01-21 14:12:30.917 default [http-nio-8085-exec-1] INFO  o.a.c.c.C.[.[localhost].[/inspect] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-01-21 14:12:30.918 default [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2022-01-21 14:12:30.920 default [http-nio-8085-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms

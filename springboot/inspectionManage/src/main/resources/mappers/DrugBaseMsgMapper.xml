@@ -590,7 +590,7 @@
         (
             spec_id,
             min_pack_num,
-            min_pack_unit,queryLabelClassList
+            min_pack_unit,
             max_pack_num,
             max_pack_unit,
             total_spec,
